@@ -1,19 +1,13 @@
-from flask import Flask
-import requests
-import os
-
-app = Flask(__name__)
-
 @app.route("/weather")
 def get_weather():
-    city = "Seoul"
-    api_key = "f35f3a95a44ea71fe80b85be8cf70f4e"  # OpenWeatherMap API 키
+    city = "Seoul"  # ✅ 고쳤음
+    api_key = "f35f3a95a44ea71fe80b85be8cf70f4e"
     url = f"http://api.openweathermap.org/data/2.5/weather?q={city},KR&appid={api_key}&units=metric"
 
     try:
         res = requests.get(url, timeout=5)
         if res.status_code != 200:
-            return "error"
+            return f"API Error: {res.status_code}, {res.text}"
 
         data = res.json()
         main = data["weather"][0]["main"].lower()
@@ -25,9 +19,5 @@ def get_weather():
         else:
             return "other"
 
-    except:
-        return "error"
-
-if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 5000))  # Render가 할당한 포트 사용
-    app.run(host="0.0.0.0", port=port)
+    except Exception as e:
+        return f"error: {str(e)}"
