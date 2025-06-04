@@ -6,7 +6,7 @@ app = Flask(__name__)
 
 @app.route("/weather")
 def get_weather():
-    city = "Nowon"
+    city = "Seoul"
     api_key = "f35f3a95a44ea71fe80b85be8cf70f4e"  # OpenWeatherMap API 키
     url = f"http://api.openweathermap.org/data/2.5/weather?q={city},KR&appid={api_key}&units=metric"
 
